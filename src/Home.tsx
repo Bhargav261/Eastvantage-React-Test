@@ -57,7 +57,7 @@ const Home = () => {
 
     //Manage State
     const [response, setResponse] = useState<inside1>();
-    document.title = "Bhargav";
+    document.title = `${response?.name?.first}`;
 
     //Useeffect
     useEffect(() => {
