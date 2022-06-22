@@ -139,7 +139,7 @@ const Home = () => {
                     <div className="sec-2">{response?.location?.street?.name} {response?.location?.city} {response?.location?.state} {response?.location?.country} ({response?.location?.postcode})</div>
                 </div>
 
-                <button onClick={callAPI} className="nextButton">Next</button>
+                <button onClick={callAPI} className="nextButton">Refresh</button>
             </div>
 
         </>
