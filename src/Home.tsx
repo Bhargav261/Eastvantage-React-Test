@@ -69,13 +69,15 @@ const Home = () => {
         try {
             let res = await MiddleService.getData({ url: 'https://randomuser.me/api' });
             setResponse(res?.results[0]);
+            // let favicon = document.getElementById("favicon");
+            // console.log(favicon)
+            // favicon.href = `${response?.picture?.large}`;
+            // <link rel="icon" href={response?.picture?.large}></link>
         }
         catch (e) {
             console.log("Error :- ", e);
         }
     }
-
-    console.log("response :- ", response)
 
     return (
         <>
