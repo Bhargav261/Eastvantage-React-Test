@@ -22,6 +22,9 @@ type inside1 = {
             longitude: string
         },
         email: string,
+        timezone: {
+            description: string
+        },
     },
     email: string,
     dob: {
@@ -72,31 +75,73 @@ const Home = () => {
         }
     }
 
+    console.log("response :- ", response)
+
     return (
         <>
-            Home
-            <button onClick={callAPI} >Next</button>
+            <div className="main">
+                {
+                    response?.picture?.large && (
+                        <>
+                            <div className='image justify-center'>
+                                <img src={response?.picture?.large} alt="Avatar" />
+                            </div>
+                        </>
+                    )
+                }
 
-            {/* <div>{response?.phone}</div> */}
+                <div className="sec-2 ">
+                    <div className='justify-center'>{response?.name?.title} {response?.name?.first} {response?.name?.last}</div>
+                    <div className='justify-center'>({response?.login?.username})</div>
+                </div>
 
-            <div>{response?.name?.title} {response?.name?.first} {response?.name?.last}</div>
-            <div>{response?.gender}</div>
-            <div>{response?.location?.street?.name} {response?.location?.city} {response?.location?.state} {response?.location?.country} ({response?.location?.postcode})</div>
-            <div>{response?.email}</div>
-            <div>{response?.login?.username}</div>
-            <div>{response?.login?.password}</div>
-            <div>{response?.dob?.date}</div>
-            <div>{response?.dob?.age}</div>
-            <div>{response?.registered?.date}</div>
-            <div>{response?.registered?.age}</div>
-            <div>{response?.phone}</div>
-            <div>{response?.cell}</div>
-            <div><img src={response?.picture?.large} /></div>
-            <div><img src={response?.picture?.medium} /></div>
-            <div><img src={response?.picture?.thumbnail} /> </div>
-            {/* <div>{response?.results?.[0]?.phone}</div> */}
+                <div>
+                    <label htmlFor="password">Email</label>
+                    <div className="sec-2">{response?.email}</div>
+                </div>
 
-            {/* <div>{response?.results[0]?.name?.title}</div> */}
+                <div className='justify-between'>
+                    <div>
+                        <label htmlFor="password">Gender</label>
+                        <div className="sec-2">{response?.gender}</div>
+                    </div>
+                </div>
+
+                <div className='justify-between'>
+                    <div>
+                        <label htmlFor="password">DOB</label>
+                        <div className="sec-2">{response?.dob?.date ? response?.dob?.date?.split("T")[0] : ''}</div>
+                    </div>
+                    <div className='w-30'>
+                        <label htmlFor="password">Age</label>
+                        <div className="sec-2">{response?.dob?.age}</div>
+                    </div>
+                </div>
+
+                <div className='justify-between'>
+                    <div>
+                        <label htmlFor="password">Phone</label>
+                        <div className="sec-2">{response?.phone}</div>
+                    </div>
+                    <div className='w-30'>
+                        <label htmlFor="password">Cell</label>
+                        <div className="sec-2">{response?.cell}</div>
+                    </div>
+                </div>
+
+                <div >
+                    <label htmlFor="password">Timezone</label>
+                    <div className="sec-2">{response?.location?.timezone?.description}</div>
+                </div>
+
+                <div>
+                    <label htmlFor="password">Address</label>
+                    <div className="sec-2">{response?.location?.street?.name} {response?.location?.city} {response?.location?.state} {response?.location?.country} ({response?.location?.postcode})</div>
+                </div>
+
+                <button onClick={callAPI} className="nextButton">Next</button>
+            </div>
+
         </>
     )
 }
