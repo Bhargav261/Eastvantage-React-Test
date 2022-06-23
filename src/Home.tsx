@@ -1,62 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import Image from './Common/Image';
+import Button from './Common/Button';
+import Details from './Common/Details';
+import { detailsType } from './Common/Model';
+import React, { useEffect, useState, useCallback } from 'react';
 import MiddleService from './Common/MiddleService';
-
-type inside1 = {
-    gender: string,
-    name: {
-        title: string,
-        first: string,
-        last: string
-    },
-    location: {
-        street: {
-            number: number,
-            name: string,
-        },
-        city: string,
-        state: string,
-        country: string,
-        postcode: string,
-        coordinates: {
-            latitude: string,
-            longitude: string
-        },
-        email: string,
-        timezone: {
-            description: string
-        },
-    },
-    email: string,
-    dob: {
-        age: number,
-        date: string
-    },
-    login: {
-        username: string
-        password: string
-    },
-    phone: string,
-    cell: string
-    registered: {
-        age: number,
-        date: string
-    },
-    picture: {
-        large: string,
-        medium: string,
-        thumbnail: string,
-    }
-
-}
-
-// type resourceType = {
-//     [key: string]: string,
-// };
 
 const Home = () => {
 
     //Manage State
-    const [response, setResponse] = useState<inside1>();
+    const [response, setResponse] = useState<detailsType>();
     document.title = `${response?.name?.first}`;
 
     //Useeffect
@@ -65,19 +17,15 @@ const Home = () => {
     }, [])
 
     //Function
-    const callAPI = async () => {
+    const callAPI = useCallback(async () => {
         try {
             let res = await MiddleService.getData({ url: 'https://randomuser.me/api' });
             setResponse(res?.results[0]);
-            // let favicon = document.getElementById("favicon");
-            // console.log(favicon)
-            // favicon.href = `${response?.picture?.large}`;
-            // <link rel="icon" href={response?.picture?.large}></link>
         }
         catch (e) {
             console.log("Error :- ", e);
         }
-    }
+    }, [])
 
     return (
         <>
@@ -86,62 +34,35 @@ const Home = () => {
                     response?.picture?.large && (
                         <>
                             <div className='image justify-center'>
-                                <img src={response?.picture?.large} alt="Avatar" />
+                                <Image src={response?.picture?.large} />
                             </div>
                         </>
                     )
                 }
 
                 <div className="sec-2 ">
-                    <div className='justify-center'>{response?.name?.title} {response?.name?.first} {response?.name?.last}</div>
-                    <div className='justify-center'>({response?.login?.username})</div>
+                    <Details clName='justify-center' value={`${response?.name?.title} ${response?.name?.first} ${response?.name?.last}`} />
+                    <Details clName='justify-center' value={`${response?.login?.username}`} />
                 </div>
 
-                <div>
-                    <label htmlFor="password">Email</label>
-                    <div className="sec-2">{response?.email}</div>
+                <Details label="Email" value={`${response?.email}`} />
+                <Details label="Gender" value={`${response?.gender}`} />
+
+                <div className='justify-between'>
+                    <Details label="DOB" value={`${response?.dob?.date ? response?.dob?.date?.split("T")[0] : ''}`} />
+                    <Details clName='w-30' label="Age" value={`${response?.dob?.age}`} />
+
                 </div>
 
                 <div className='justify-between'>
-                    <div>
-                        <label htmlFor="password">Gender</label>
-                        <div className="sec-2">{response?.gender}</div>
-                    </div>
+                    <Details label="Phone" value={`${response?.phone}`} />
+                    <Details clName='w-30' label="Cell" value={`${response?.cell}`} />
                 </div>
 
-                <div className='justify-between'>
-                    <div>
-                        <label htmlFor="password">DOB</label>
-                        <div className="sec-2">{response?.dob?.date ? response?.dob?.date?.split("T")[0] : ''}</div>
-                    </div>
-                    <div className='w-30'>
-                        <label htmlFor="password">Age</label>
-                        <div className="sec-2">{response?.dob?.age}</div>
-                    </div>
-                </div>
+                <Details label="Timezone" value={`${response?.location?.timezone?.description}`} />
+                <Details label="Address" value={`${response?.location?.street?.name}`} />
 
-                <div className='justify-between'>
-                    <div>
-                        <label htmlFor="password">Phone</label>
-                        <div className="sec-2">{response?.phone}</div>
-                    </div>
-                    <div className='w-30'>
-                        <label htmlFor="password">Cell</label>
-                        <div className="sec-2">{response?.cell}</div>
-                    </div>
-                </div>
-
-                <div >
-                    <label htmlFor="password">Timezone</label>
-                    <div className="sec-2">{response?.location?.timezone?.description}</div>
-                </div>
-
-                <div>
-                    <label htmlFor="password">Address</label>
-                    <div className="sec-2">{response?.location?.street?.name} {response?.location?.city} {response?.location?.state} {response?.location?.country} ({response?.location?.postcode})</div>
-                </div>
-
-                <button onClick={callAPI} className="nextButton">Refresh</button>
+                <Button onClick={callAPI} value="Refresh" />
             </div>
 
         </>

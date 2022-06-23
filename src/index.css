@@ -19,6 +19,7 @@ body {
   border-radius: 30px;
   box-shadow: 0 0 2em #e6e9f9;
   gap: 1.5em;
+  min-width: 350px;
 }
 
 /* .main .password {
@@ -53,24 +54,24 @@ img {
   padding: 2px;
 }
 
-.justify-center{
+.justify-center {
   display: flex;
   justify-content: center;
 }
 
-.flex{
+.flex {
   display: flex;
 }
 
-.justify-between{
+.justify-between {
   display: flex;
   justify-content: space-between;
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
 
-.w-30{
+.w-30 {
   width: 30%;
 }
