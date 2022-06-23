@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{memo} from 'react';
 
 type props = {
     src: string
@@ -12,4 +12,4 @@ const Image = ({ src }: props) => {
     )
 }
 
-export default Image;
+export default memo(Image);

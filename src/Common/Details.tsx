@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{memo} from 'react';
 
 type props = {
     label?: string,
@@ -19,4 +19,4 @@ const Details = ({ label, value, clName }: props) => {
     )
 }
 
-export default Details;
+export default memo(Details);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{memo} from 'react';
 
 type props = {
     onClick: () => void,
@@ -14,4 +14,4 @@ const Button = ({onClick, value} : props) => {
     )
 }
 
-export default Button;
+export default  memo(Button);
